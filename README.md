@@ -2,6 +2,8 @@
 
 This is a javascript companion library to [msgpack-numpy](https://github.com/lebedov/msgpack-numpy). It allows serialization and deserialization of the same msgpack extension type and format to/from javascript typed arrays.
 
+This library works in nodejs and in the browser.
+
 ## APIs
 
 ```
