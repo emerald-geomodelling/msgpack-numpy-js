@@ -96,7 +96,12 @@ export function unpackNumpy(v) {
       }[t];
 
       if (constr !== undefined) {
-        v = new constr(d.buffer);
+        if (d.byteOffset !== undefined) {
+          // NodeJS
+          v = new constr(d.buffer, d.byteOffset, d.length / constr.BYTES_PER_ELEMENT);
+        } else {
+          v = new constr(d.buffer);
+        }
         v = npsplitdims(v, s);
         return v;
       } else {
