@@ -5,19 +5,25 @@ This is a javascript companion library to [msgpack-numpy](https://github.com/leb
 ## APIs
 
 ```
-import { packBinary, unpackBinary } from "../src/index.js";
+import { packBinary, unpackBinary } from "msgpack-numpy-js";
+import msgpack from "msgpack-lite";
 
-var data = unpackBinary(binary);
-var newBinary = packBinary(data);
+var data = new Uint32Array([1, 2, 3]);
+
+var binary = packBinary(data);
+var data2 = unpackBinary(binary);
 ```
 
 alternatively a lower level API can be used:
 
 ```
-import { packNumpy, unpackNumpy } from "../src/index.js";
+import { packNumpy, unpackNumpy } from "msgpack-numpy-js";
+import msgpack from "msgpack-lite";
 
-var data = unpackNumpy(msgpack.decode(binary));
-var newBinary = msgpack.encode(packNumpy(data), {
+var data = new Uint32Array([1, 2, 3]);
+
+var binary = msgpack.encode(packNumpy(data), {
     codec: msgpack.createCodec({ usemap: true, binarraybuffer: true }),
   });
+var data2 = unpackNumpy(msgpack.decode(binary));
 ```
