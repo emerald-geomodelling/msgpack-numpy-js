@@ -1,6 +1,6 @@
 {
   "name": "msgpack-numpy-js",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "",
   "main": "src/index.js",
   "type": "module",

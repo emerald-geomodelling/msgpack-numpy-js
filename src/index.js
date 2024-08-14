@@ -1,10 +1,10 @@
 import msgpack from "msgpack-lite";
 import _ from "underscore";
 
-if (typeof BigInt64Array === 'undefined') {
+if (typeof BigInt64Array === "undefined") {
   const BigInt64Array = window.BigInt64Array;
 }
-if (typeof BigUint64Array === 'undefined') {
+if (typeof BigUint64Array === "undefined") {
   const BigUint64Array = window.BigUint64Array;
 }
 
@@ -74,20 +74,25 @@ export function unpackNumpy(v) {
     if (isnd !== undefined && typeof t === "string") {
       d = byteswap(t[0], d);
       t = t.slice(1);
+
+      // documentation is here https://numpy.org/doc/stable/reference/arrays.dtypes.html
       constr = {
-        U8: Uint8Array,
+        U8: Uint8Array, // this is a unicode string
 
         b: Int8Array,
         B: Int8Array,
 
+        i1: Int8Array,
         i2: Int16Array,
         i4: Int32Array,
         i8: BigInt64Array,
 
+        I1: Uint8Array,
         I2: Uint16Array,
         I4: Uint32Array,
         I8: BigUint64Array,
 
+        u1: Uint8Array,
         u2: Uint16Array,
         u4: Uint32Array,
         u8: BigUint64Array,
@@ -99,7 +104,11 @@ export function unpackNumpy(v) {
       if (constr !== undefined) {
         if (d.byteOffset !== undefined) {
           // NodeJS
-          v = new constr(d.buffer, d.byteOffset, d.length / constr.BYTES_PER_ELEMENT);
+          v = new constr(
+            d.buffer,
+            d.byteOffset,
+            d.length / constr.BYTES_PER_ELEMENT
+          );
         } else {
           v = new constr(d.buffer);
         }
