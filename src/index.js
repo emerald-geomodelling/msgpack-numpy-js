@@ -12,6 +12,7 @@ const isLittleEndian =
   new Uint8Array(new Uint32Array([0x11223344]).buffer)[0] === 0x44;
 
 function byteswap(typecode, data) {
+  if (typecode === "|") return data; // Not much we need to do here...
   if (typecode === "=") return data; // Not much we can do here :P
   if (typecode === "<" && isLittleEndian) return data;
   if (typecode === ">" && !isLittleEndian) return data;
